@@ -19,7 +19,6 @@ DOC
 
 # Préparer une liste d'urls à consulter.
 # Lister les medias concernés : colonne 6 = GPE et colonne 3 = Média.
-
 cat "../medias_francais.tsv" | awk -F "	" '
 	$6 == "GPE" && $3 == "Média" {
  		 print $1 "	" $2 > "medias_acpm.tmp"
