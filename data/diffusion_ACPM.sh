@@ -1,5 +1,5 @@
 #!/bin/sh
-# Base de données diffusion ACPM
+# Base de données diffusion_ACPM.tsv
 # Création et mise à jour à partir du site http://www.acpm.fr/
 
 : <<'DOC'
