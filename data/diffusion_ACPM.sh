@@ -38,7 +38,7 @@ done
 # Lire en ligne les données de diffusion de chaque média
 echo "\nLecture des données en ligne...\n"
 
-entete="periode	id	publication	url_ACPM	diffusion france payee	% diffusion france payee	diffusion totale	% diffusion totale"
+entete="periode	id	publication	url_ACPM	diffusion france payee	% france VS A-1	diffusion totale	% VS A-1"
 echo "$entete"
 
 cat medias_acpm_urls.tmp  | head -10000 | while read media ; do
