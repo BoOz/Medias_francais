@@ -36,7 +36,6 @@ echo "$medias" | while read media ; do
 done
 
 # Lire en ligne les données de diffusion de chaque média
-
 echo "\nLecture des données en ligne...\n"
 
 entete="periode	id	publication	url_ACPM	diffusion france payee	% diffusion france payee	diffusion totale	% diffusion totale"
@@ -77,13 +76,12 @@ rm medias_acpm_urls.tmp
 contenu=$(cat diffusion_acpm.nouveau | sort | uniq)
 echo "$contenu" > diffusion_acpm.nouveau.tmp
 
-# Y'a t'il un fichier existant ?
-if [ ! -f "diffusion_ACPM.tsv" ]
+if [ ! -f "diffusion_ACPM.tsv" ] # Créer le fichier ?
 	then
 		echo "création du fichier diffusion_ACPM.tsv"
 		echo "$entete\n$contenu" > "diffusion_ACPM.tsv"
 	else
-		tail -n +2 diffusion_ACPM.tsv > diffusion_ACPM.tsv.tmp # Utiliser le fichier original sans entete
+		tail -n +2 diffusion_ACPM.tsv > diffusion_ACPM.tsv.tmp # Utiliser le fichier original sans entête
 		
 		# Mise à jour des données
 				
@@ -123,6 +121,7 @@ if [ ! -f "diffusion_ACPM.tsv" ]
 		echo "$entete\n$c" > diffusion_ACPM.tsv
 fi
 
+# Afficher la base de donnée.
 echo "\nDonnées enregistrées :\n"
 cat diffusion_ACPM.tsv
 
