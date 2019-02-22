@@ -41,7 +41,7 @@ echo "\nLecture des données en ligne...\n"
 entete="periode	id	publication	url_ACPM	diffusion france payee	% diffusion france payee	diffusion totale	% diffusion totale"
 echo "$entete"
 
-cat medias_acpm_urls.tmp | while read media ; do
+cat medias_acpm_urls.tmp  | head -10000 | while read media ; do
 	page="" # recuperer l'url...
 	id=$(echo "$media" | cut -d"	" -f1)
 	publication=$(echo "$media" | cut -d"	" -f2)
@@ -64,8 +64,8 @@ cat medias_acpm_urls.tmp | while read media ; do
 	diffusion_totale=$(echo "$data" | sed -n 7p)
 	var_diffusion_totale=$(echo "$data" | sed -n 8p)
 		
-	echo "$annee	$id	$publication	$url	${diffusion_france_payee/ /}	${var_diffusion_france_payee/\%/}	${diffusion_totale/ /}	${var_diffusion_totale/\%/}"
-	echo "$annee	$id	$publication	$url	${diffusion_france_payee/ /}	${var_diffusion_france_payee/\%/}	${diffusion_totale/ /}	${var_diffusion_totale/\%/}" >> diffusion_acpm.nouveau
+	echo "${annee:-NA}	$id	$publication	$url	${diffusion_france_payee/ /}	${var_diffusion_france_payee/\%/}	${diffusion_totale/ /}	${var_diffusion_totale/\%/}"
+	echo "${annee:-NA}	$id	$publication	$url	${diffusion_france_payee/ /}	${var_diffusion_france_payee/\%/}	${diffusion_totale/ /}	${var_diffusion_totale/\%/}" >> diffusion_acpm.nouveau
 done
 rm medias_acpm_urls.tmp
 
@@ -116,7 +116,7 @@ if [ ! -f "diffusion_ACPM.tsv" ] # Créer le fichier ?
 		done
 		
 		# Générer le tsv.
-		cat maj.tmp | sort | uniq > diffusion_ACPM.tsv
+		cat maj.tmp | sort -t"	" -k7 | uniq > diffusion_ACPM.tsv
 		c=$(cat diffusion_ACPM.tsv)
 		echo "$entete\n$c" > diffusion_ACPM.tsv
 fi
