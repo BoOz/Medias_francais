@@ -13,7 +13,8 @@
 	Ce script utilise les commandes suivantes :
 		- awk pour lire le fichier tsv
 		- curl pour lire le site http://www.acpm.fr/
-		- comm et join pour enregistrer et mettre à jour les données dans un fichier diffusion_ACPM.tsv
+		- sed et grep pour extraire les données
+		- comm et join pour enregistrer et mettre à jour le fichier diffusion_ACPM.tsv
 
 DOC
 
@@ -60,8 +61,9 @@ cat medias_acpm_urls.tmp | while read media ; do
 	var_diffusion_france_payee=$(echo "$data" | sed -n 5p)
 	diffusion_totale=$(echo "$data" | sed -n 7p)
 	var_diffusion_totale=$(echo "$data" | sed -n 8p)
-	echo "$annee	$id	$publication	$url	$diffusion_france_payee	$var_diffusion_france_payee	$diffusion_totale	$var_diffusion_totale"
-	echo "$annee	$id	$publication	$url	$diffusion_france_payee	$var_diffusion_france_payee	$diffusion_totale	$var_diffusion_totale" >> diffusion_acpm.nouveau
+		
+	echo "$annee	$id	$publication	$url	${diffusion_france_payee/ /}	${var_diffusion_france_payee/\%/}	${diffusion_totale/ /}	${var_diffusion_totale/\%/}"
+	echo "$annee	$id	$publication	$url	${diffusion_france_payee/ /}	${var_diffusion_france_payee/\%/}	${diffusion_totale/ /}	${var_diffusion_totale/\%/}" >> diffusion_acpm.nouveau
 done
 rm medias_acpm_urls.tmp
 
@@ -116,6 +118,9 @@ if [ ! -f "diffusion_ACPM.tsv" ]
 		c=$(cat diffusion_ACPM.tsv)
 		echo "$entete\n$c" > diffusion_ACPM.tsv
 fi
+
+echo ""
+cat diffusion_ACPM.tsv
 
 [ -f "diffusion_ACPM.nouveau" ] && rm diffusion_ACPM.nouveau
 rm *.tmp
