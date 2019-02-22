@@ -61,9 +61,10 @@ cat medias_acpm_urls.tmp  | head -10000 | while read media ; do
 	annee=$(echo "$data" | sed -n 1p)
 	diffusion_france_payee=$(echo "$data" | sed -n 4p)
 	var_diffusion_france_payee=$(echo "$data" | sed -n 5p)
+	var_diffusion_france_payee=${var_diffusion_france_payee/,/.}
 	diffusion_totale=$(echo "$data" | sed -n 7p)
 	var_diffusion_totale=$(echo "$data" | sed -n 8p)
-		
+	var_diffusion_totale=${var_diffusion_totale/,/.}
 	echo "${annee:-NA}	$id	$publication	$url	${diffusion_france_payee/ /}	${var_diffusion_france_payee/\%/}	${diffusion_totale/ /}	${var_diffusion_totale/\%/}"
 	echo "${annee:-NA}	$id	$publication	$url	${diffusion_france_payee/ /}	${var_diffusion_france_payee/\%/}	${diffusion_totale/ /}	${var_diffusion_totale/\%/}" >> diffusion_acpm.nouveau
 done
@@ -115,15 +116,15 @@ if [ ! -f "diffusion_ACPM.tsv" ] # Créer le fichier ?
 			fi
 		done
 		
-		# Générer le tsv.
-		cat maj.tmp | sort -t"	" -k7 | uniq > diffusion_ACPM.tsv
+		# Générer le tsv trié sur le 8e champ.
+		cat maj.tmp | sort -t"	" -k1nr -k8nr | uniq > diffusion_ACPM.tsv
 		c=$(cat diffusion_ACPM.tsv)
 		echo "$entete\n$c" > diffusion_ACPM.tsv
 fi
 
 # Afficher la base de donnée.
 echo "\nDonnées enregistrées dans diffusion_ACPM.tsv :\n"
-cat diffusion_ACPM.tsv
+cat diffusion_ACPM.tsv | column -t -s"	"
 
 [ -f "diffusion_ACPM.nouveau" ] && rm diffusion_ACPM.nouveau
 rm *.tmp
