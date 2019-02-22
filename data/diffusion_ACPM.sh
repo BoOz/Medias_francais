@@ -79,7 +79,7 @@ rm medias_acpm_urls.tmp
 
 
 # Trier les nouvelles données
-contenu=$(cat diffusion_acpm.nouveau | sort | uniq)
+contenu=$(cat diffusion_acpm.nouveau | sort -t"	" -k1nr -k8nr | uniq)
 echo "$contenu" > diffusion_acpm.nouveau.tmp
 
 if [ ! -f "diffusion_ACPM.tsv" ] # Créer le fichier ?
@@ -121,8 +121,8 @@ if [ ! -f "diffusion_ACPM.tsv" ] # Créer le fichier ?
 			fi
 		done
 		
-		# Générer le tsv trié sur le 8e champ.
-		cat maj.tmp | sort -t"	" -k1nr -k7nr | uniq > diffusion_ACPM.tsv
+		# Générer le tsv trié sur le et et 7e champ.
+		cat maj.tmp | sort -t"	" -k1nr -k8nr | uniq > diffusion_ACPM.tsv
 		c=$(cat diffusion_ACPM.tsv)
 		echo "$entete\n$c" > diffusion_ACPM.tsv
 fi
