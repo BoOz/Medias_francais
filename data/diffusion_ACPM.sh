@@ -1,15 +1,19 @@
 #!/bin/sh
+# Base de données diffusion ACPM
+# Création et mise à jour à partir du site http://www.acpm.fr/
 
 : <<'DOC'
 
 	Mettre à jour le tableau de diffusion ACPM.
 	
-	Usage : sh diffusion_ACPM.sh 
+	Usage : 
+		cd /la/ou/est/le/clone/data
+		sh diffusion_ACPM.sh 
 	
 	Ce script utilise les commandes suivantes :
 		- awk pour lire le fichier tsv
-		- curl pour lire l'ACPM en ligne
-		- comm et join pour enregistrer mettre à jour les données en tsv
+		- curl pour lire le site http://www.acpm.fr/
+		- comm et join pour enregistrer mettre à jour les données dans un fichier tsv
 
 DOC
 
@@ -18,7 +22,7 @@ echo "\n*** Calcul de la diffusion ACPM ***\n\n"
 # Préparer une liste d'urls à consulter.
 
 # Lister les medias concernés.
-# Colonne 6 = GPE et colonne 3 = Mdia.
+# Colonne 6 = GPE et colonne 3 = Média.
 
 cat "../medias_francais.tsv" | awk -F "	" '
 
@@ -35,7 +39,6 @@ echo "$medias" | while read media ; do
 	publication=$(echo "$media" | cut -d"	" -f2 | tr "A-Zéà É’," "a-zea\-e\--" | sed -e's/--*/-/g')
 	echo "$media	http://www.acpm.fr/Support/$publication"  >> medias_acpm_urls.tmp
 done
-
 rm medias_acpm.tmp
 
 
