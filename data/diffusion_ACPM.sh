@@ -13,7 +13,7 @@
 	Ce script utilise les commandes suivantes :
 		- awk pour lire le fichier tsv
 		- curl pour lire le site http://www.acpm.fr/
-		- comm et join pour enregistrer mettre à jour les données dans un fichier tsv
+		- comm et join pour enregistrer et mettre à jour les données dans un fichier tsv
 
 DOC
 
