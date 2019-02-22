@@ -122,7 +122,7 @@ if [ ! -f "diffusion_ACPM.tsv" ] # Créer le fichier ?
 		done
 		
 		# Générer le tsv trié sur le 8e champ.
-		cat maj.tmp | sort -t"	" -k1nr -k8nr | uniq > diffusion_ACPM.tsv
+		cat maj.tmp | sort -t"	" -k1nr -k7nr | uniq > diffusion_ACPM.tsv
 		c=$(cat diffusion_ACPM.tsv)
 		echo "$entete\n$c" > diffusion_ACPM.tsv
 fi
