@@ -60,11 +60,16 @@ cat medias_acpm_urls.tmp  | head -10000 | while read media ; do
 	# afficher les données
 	annee=$(echo "$data" | sed -n 1p)
 	diffusion_france_payee=$(echo "$data" | sed -n 4p)
+	diffusion_france_payee=${diffusion_france_payee:-NA}
 	var_diffusion_france_payee=$(echo "$data" | sed -n 5p)
 	var_diffusion_france_payee=${var_diffusion_france_payee/,/.}
+	var_diffusion_france_payee=${var_diffusion_france_payee:-NA}
 	diffusion_totale=$(echo "$data" | sed -n 7p)
+	diffusion_totale=${diffusion_totale:-NA}
 	var_diffusion_totale=$(echo "$data" | sed -n 8p)
 	var_diffusion_totale=${var_diffusion_totale/,/.}
+	var_diffusion_totale=${var_diffusion_totale:-NA}
+	
 	echo "${annee:-NA}	$id	$publication	$url	${diffusion_france_payee/ /}	${var_diffusion_france_payee/\%/}	${diffusion_totale/ /}	${var_diffusion_totale/\%/}"
 	echo "${annee:-NA}	$id	$publication	$url	${diffusion_france_payee/ /}	${var_diffusion_france_payee/\%/}	${diffusion_totale/ /}	${var_diffusion_totale/\%/}" >> diffusion_acpm.nouveau
 done
