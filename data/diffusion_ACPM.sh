@@ -36,7 +36,10 @@ echo "$medias" | while read media ; do
 done
 
 # Lire en ligne les données de diffusion de chaque média
-entete="Période	id	publication	url_ACPM	diffusion france payee	% diffusion france payee	diffusion totale	% diffusion totale"
+
+echo "\nLecture des données en ligne...\n"
+
+entete="periode	id	publication	url_ACPM	diffusion france payee	% diffusion france payee	diffusion totale	% diffusion totale"
 echo "$entete"
 
 cat medias_acpm_urls.tmp | while read media ; do
@@ -68,6 +71,7 @@ done
 rm medias_acpm_urls.tmp
 
 # Enregistrer / mettre a jour les données dans un fichier diffusion_ACPM.tsv.
+
 
 # Trier les nouvelles données
 contenu=$(cat diffusion_acpm.nouveau | sort | uniq)
@@ -119,7 +123,7 @@ if [ ! -f "diffusion_ACPM.tsv" ]
 		echo "$entete\n$c" > diffusion_ACPM.tsv
 fi
 
-echo ""
+echo "\nDonnées enregistrées :\n"
 cat diffusion_ACPM.tsv
 
 [ -f "diffusion_ACPM.nouveau" ] && rm diffusion_ACPM.nouveau
