@@ -122,7 +122,7 @@ if [ ! -f "diffusion_ACPM.tsv" ] # Créer le fichier ?
 fi
 
 # Afficher la base de donnée.
-echo "\nDonnées enregistrées :\n"
+echo "\nDonnées enregistrées dans diffusion_ACPM.tsv :\n"
 cat diffusion_ACPM.tsv
 
 [ -f "diffusion_ACPM.nouveau" ] && rm diffusion_ACPM.nouveau
