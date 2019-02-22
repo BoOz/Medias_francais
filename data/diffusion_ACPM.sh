@@ -79,7 +79,7 @@ rm medias_acpm_urls.tmp
 
 
 # Trier les nouvelles données
-contenu=$(cat diffusion_acpm.nouveau | sort -t"	" -k1nr -k8nr | uniq)
+contenu=$(cat diffusion_acpm.nouveau | sort -t"	" -k1nr -k8nr | uniq | sed '/^$/d')
 echo "$contenu" > diffusion_acpm.nouveau.tmp
 
 if [ ! -f "diffusion_ACPM.tsv" ] # Créer le fichier ?
@@ -114,17 +114,20 @@ if [ ! -f "diffusion_ACPM.tsv" ] # Créer le fichier ?
 			periode=$(echo "$l" | cut -f1)
 			id=$(echo "$l" | cut -f2)
 			# a t'on déja cette ligne ?
-			ligne=$(cat maj.tmp | grep -Eo "^$periode	$id.*")
+			ligne=$(cat maj.tmp | grep -Eo "^$periode	$id")
 			if (( ${#ligne} == 0 ))
 				then
 					echo "$l" >> maj.tmp
 			fi
 		done
 		
+		sed -i '/^$/d' maj.tmp
+		
 		# Générer le tsv trié sur le et et 7e champ.
 		cat maj.tmp | sort -t"	" -k1nr -k8nr | uniq > diffusion_ACPM.tsv
 		c=$(cat diffusion_ACPM.tsv)
 		echo "$entete\n$c" > diffusion_ACPM.tsv
+		sed -i '/^$/d' diffusion_ACPM.tsv
 fi
 
 # Afficher la base de donnée.
